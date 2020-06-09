@@ -14,11 +14,15 @@ function trackConsent(user, context, callback) {
   user.user_metadata = user.user_metadata || {};
   // short-circuit if the user signed up already
   if (user.user_metadata.consentGiven) return callback(null, user, context);
+  // uncomment the two lines below and comment out above line if short-circuiting based on consentVersion instead of consentGiven
+  //const CONSENT_VERSION = configuration.CONSENT_VERSION;
+  //if (user.user_metadata.consentVersion == CONSENT_VERSION) return callback(null, user, context);
 
   // first time login/signup
   user.user_metadata.consentGiven = true;
-  // uncomment to track consentVersion
-  // user.user_metadata.consentVersion = "1.9";
+  // uncomment next line track consentVersion & act on it
+  //user.user_metadata.consentVersion = CONSENT_VERSION;
+
 
   user.user_metadata.consentTimestamp = Date.now();
   auth0.users.updateUserMetadata(user.user_id, user.user_metadata)
